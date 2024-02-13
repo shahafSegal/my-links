@@ -1,6 +1,8 @@
 const express= require('express')
 const mongoose=require("mongoose")
 const mongoUrl="mongodb://localhost:27017/my-links"
+const linkRouter=require('./routes/links.routes')
+const cors=require('cors')
 
 mongoose.connect(mongoUrl)
     .then(()=>{
@@ -12,10 +14,9 @@ mongoose.connect(mongoUrl)
 
 const app=express()
 app.use(express.json())
+app.use(cors())
 
-app.use('/api/v1/events',eventRouter)
-app.use('/api/v1/users',userRouter)
-
+app.use('/api/v1/links',linkRouter)
 
 
 module.exports={app};
