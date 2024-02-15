@@ -12,9 +12,9 @@ router.post("/register",registerUser)
 
 router.post('/login',loginUser)
 
-router.patch('/password',auth,changePassword)
+router.patch('/password/:id',auth,changePassword)
 
-router.delete('/remove',auth,deleteUser)
+router.delete('/remove/:id',auth,deleteUser)
 
 
 module.exports=router;
