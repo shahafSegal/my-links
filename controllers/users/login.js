@@ -1,4 +1,5 @@
 const { UsersModel } = require("../../models/users.model");
+const { genTokenUser } = require("../../utils/jwt");
 const { saltEncrypt } = require("./encryption");
 
 const loginUser=async(req,res)=>{
@@ -8,7 +9,9 @@ const loginUser=async(req,res)=>{
         if(knownUser){
             const comparePass=saltEncrypt(knownUser.salt,password)
             const correctPass=comparePass==knownUser.password
-            if(correctPass)return res.status(200).send(knownUser)
+            if(correctPass){
+                const token=genTokenUser(knownUser)
+                return res.status(200).send({user:knownUser,token})}
         }
         res.send("incorrect credentials")
     } catch (error) {
